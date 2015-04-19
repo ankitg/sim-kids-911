@@ -1,8 +1,6 @@
 package scottso.assist911.Activities;
 
-import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -10,15 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import scottso.assist911.Dialogs.AudioPromptRemovedDialog;
-import scottso.assist911.Dialogs.PromptDialDialog;
-import scottso.assist911.Dialogs.PromptRemovedDialog;
-import scottso.assist911.Dialogs.PromptUnlockDialog;
 import scottso.assist911.R;
 import scottso.assist911.SimKidsActivity;
 
@@ -52,26 +45,26 @@ public class PasswordActivity extends SimKidsActivity implements View.OnClickLis
         setContentView(R.layout.activity_password);
 
         if(MainMenuActivity.TIMES_COMPLETED > 5 && MainMenuActivity.IS_REMOVE_TEXT_PROMPT == false) {
-            DialogFragment newFragment = new PromptRemovedDialog();
-            newFragment.show(getFragmentManager(), "PromptDialog");
+//            DialogFragment newFragment = new PromptRemovedDialog();
+//            newFragment.show(getFragmentManager(), "PromptDialog");
 
             MainMenuActivity.IS_REMOVE_TEXT_PROMPT = true;
             LoginActivity.EDITOR.putBoolean(LoginActivity.REMOVE_TEXT_PROMPT, true);
             LoginActivity.EDITOR.commit();
 
         } else if (MainMenuActivity.TIMES_COMPLETED > 10 && MainMenuActivity.IS_REMOVE_AUDIO_PROMPT == false) {
-            DialogFragment newFragment = new AudioPromptRemovedDialog();
-            newFragment.show(getFragmentManager(), "PromptDialog");
+//            DialogFragment newFragment = new AudioPromptRemovedDialog();
+//            newFragment.show(getFragmentManager(), "PromptDialog");
 
             MainMenuActivity.IS_REMOVE_AUDIO_PROMPT = true;
             LoginActivity.EDITOR.putBoolean(LoginActivity.REMOVE_AUDIO_PROMPT, true);
             LoginActivity.EDITOR.commit();
         }
 
-        if (MainMenuActivity.TIMES_COMPLETED <= 5) {
-            DialogFragment newFragment = new PromptUnlockDialog();
-            newFragment.show(getFragmentManager(), "PromptDialog");
-        }
+//        if (MainMenuActivity.TIMES_COMPLETED <= 5) {
+//            DialogFragment newFragment = new PromptUnlockDialog();
+//            newFragment.show(getFragmentManager(), "PromptDialog");
+//        }
 
         tts = new TextToSpeech(this, this);
 
@@ -275,7 +268,7 @@ public class PasswordActivity extends SimKidsActivity implements View.OnClickLis
     }
 
     public void speakUnlock() {
-        String text = "Press the Emergency call button to unlock the phone";
+        String text = "Click the green.";
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 

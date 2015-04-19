@@ -18,13 +18,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainMenuActivity extends SimKidsActivity implements View.OnClickListener{
 
-//    private Button mInstructionalButton;
     private Button mPractiseButton;
     private Button mVideosButton;
-//    private Button mSettingsButton;
-//    private Button mReportButton;
-
-//    final String[] videoArray = {"flame","smoke","passed","car","drowning","a","b"};
 
     public static int NUM_TRIES = 0;
     public static int TIMES_COMPLETED;
@@ -39,20 +34,11 @@ public class MainMenuActivity extends SimKidsActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_mainmenu);
 
-//        mInstructionalButton = (Button) this.findViewById(R.id.instruction_button);
-//        mInstructionalButton.setOnClickListener(this);
-
         mPractiseButton = (Button) this.findViewById(R.id.practice_button);
         mPractiseButton.setOnClickListener(this);
 
         mVideosButton = (Button) this.findViewById(R.id.videos_button);
         mVideosButton.setOnClickListener(this);
-
-//        mSettingsButton = (Button) this.findViewById(R.id.profile_button);
-//        mSettingsButton.setOnClickListener(this);
-
-//        mReportButton = (Button) this.findViewById(R.id.report_button);
-//        mReportButton.setOnClickListener(this);
 
         TIMES_COMPLETED = LoginActivity.PREF.getInt(LoginActivity.TIMES_COMPLETED, 0);
         IS_REMOVE_TEXT_PROMPT = LoginActivity.PREF.getBoolean(LoginActivity.REMOVE_TEXT_PROMPT, false);
@@ -78,10 +64,6 @@ public class MainMenuActivity extends SimKidsActivity implements View.OnClickLis
 
         switch(v.getId()) {
 
-//            case R.id.instruction_button:
-//                goToInstructions();
-//                break;
-
             case R.id.practice_button:
                 CURRENT_TRY_SCORE = 0;
                 LoginActivity.EDITOR.putInt(LoginActivity.CURRENT_TRY_SCORE, CURRENT_TRY_SCORE);
@@ -96,35 +78,13 @@ public class MainMenuActivity extends SimKidsActivity implements View.OnClickLis
                 goToVideos();
                 System.out.println(LoginActivity.PREF.getInt(LoginActivity.TIMES_COMPLETED, 0));
                 break;
-//            case R.id.profile_button:
-//                goToSettings();
-//                break;
-//            case R.id.report_button:
-//                goToReport();
-//                break;
         }
     }
-
-//    public void goToInstructions() {
-//        Intent instruction = new Intent(this, InstructionActivity.class);
-//        startActivity(instruction);
-//    }
 
     public void goToVideos() {
         Intent video = new Intent(this, VideosActivity.class);
         startActivity(video);
     }
-
-//    public void goToSettings() {
-//        Intent settings = new Intent(this, ProfileActivity.class);
-//        startActivity(settings);
-//        finish();
-//    }
-
-//    public void goToReport() {
-//        Intent report = new Intent(this, ReportActivity.class);
-//        startActivity(report);
-//    }
 
     public void goToVideoPlayer(VideoItem video) {
         Intent videoPlayer = new Intent(this, PracticePlayVideoActivity.class);
