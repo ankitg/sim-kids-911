@@ -1,17 +1,23 @@
 package scottso.assist911.Activities;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import scottso.assist911.R;
 import scottso.assist911.SimKidsActivity;
+import scottso.assist911.SimKidsApplication;
+import scottso.assist911.VideoItem;
 
-public class VideosActivity extends SimKidsActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class VideosActivity extends SimKidsActivity //implements AdapterView.OnItemSelectedListener
+{
 
     public static String VIDEO_NAME;
 
@@ -20,61 +26,107 @@ public class VideosActivity extends SimKidsActivity implements AdapterView.OnIte
     public static Boolean POLICE = false;
     public static Boolean AMBULANCE = false;
 
-    private Spinner spinner;
+    private ListView videosList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videos);
 
-        spinner = (Spinner) findViewById(R.id.videos_spinner);
-        spinner.setOnItemSelectedListener(this);
 
-        Button watch = (Button) findViewById(R.id.btn_watch);
-        watch.setOnClickListener(this);
+        videosList = (ListView) findViewById(R.id.list_videos_modeling);
+        videosList.setAdapter(new ListAdapter() {
+            @Override
+            public boolean areAllItemsEnabled() {
+                return true;
+            }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.videos_array, android.R.layout.simple_spinner_item);
+            @Override
+            public boolean isEnabled(int position) {
+                return true;
+            }
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
+            @Override
+            public void registerDataSetObserver(DataSetObserver observer) {
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        System.out.println(spinner.getSelectedItem());
-    }
+            }
 
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
+            @Override
+            public void unregisterDataSetObserver(DataSetObserver observer) {
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.btn_watch:
-                if (String.valueOf(spinner.getSelectedItem()).equals("Instructional Video")) {
-                    VIDEO_NAME = "instructional";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Flames")) {
-                    VIDEO_NAME = "flame";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Smoke")) {
-                    VIDEO_NAME = "smoke";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Car Thief")) {
-                    VIDEO_NAME = "car";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Passing Out")) {
-                    VIDEO_NAME = "passed";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Drowning")) {
-                    VIDEO_NAME = "drowning";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Children Biking")) {
-                    VIDEO_NAME = "a";
-                } else if (String.valueOf(spinner.getSelectedItem()).equals("Family Playing Soccer")) {
-                    VIDEO_NAME = "b";
+            }
+
+            @Override
+            public int getCount() {
+                return ((SimKidsApplication) getApplication()).getVideos().size();
+            }
+
+            @Override
+            public VideoItem getItem(int position) {
+                return ((SimKidsApplication) getApplication()).getVideos().get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public boolean hasStableIds() {
+                return false;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+
+                if (v == null) {
+
+                    LayoutInflater vi;
+                    vi = LayoutInflater.from(VideosActivity.this);
+                    v = vi.inflate(R.layout.list_item_video, null);
+
                 }
+
+                VideoItem p = getItem(position);
+
+                if (p != null) {
+
+                    TextView tvVideoTitle = (TextView) v.findViewById(R.id.listrow_text_videolist);
+                    tvVideoTitle.setText(p.title);
+                }
+
+                return v;
+
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return 0;
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 1;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+        });
+
+        videosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VIDEO_NAME = ((SimKidsApplication) getApplication()).getVideos().get(position).videoName;
                 goToVideoPlayer();
-                break;
-        }
+            }
+        });
     }
 
     public void goToVideoPlayer() {
         Intent videoPlayer = new Intent(this, PlayVideoActivity.class);
+        videoPlayer.putExtra("videoName",VIDEO_NAME);
         startActivity(videoPlayer);
         finish();
     }

@@ -9,8 +9,11 @@ import android.widget.VideoView;
 
 import scottso.assist911.R;
 import scottso.assist911.SimKidsActivity;
+import scottso.assist911.VideoItem;
 
 public class PracticePlayVideoActivity extends SimKidsActivity implements View.OnClickListener {
+
+    private VideoItem selectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +28,10 @@ public class PracticePlayVideoActivity extends SimKidsActivity implements View.O
         Button no = (Button)findViewById(R.id.btn_not_emergency);
         no.setOnClickListener(this);
 
+        selectedItem = (VideoItem) getIntent().getSerializableExtra("selectedVideo");
+
         int videoResource = getResources().
-                getIdentifier(VideosActivity.VIDEO_NAME, "raw", getPackageName());
+                getIdentifier(selectedItem.videoName, "raw", getPackageName());
         String uri = "android.resource://" + getPackageName() + "/" + videoResource;
 
         VideoView videoView = (VideoView) findViewById(R.id.VideoView);
@@ -38,7 +43,7 @@ public class PracticePlayVideoActivity extends SimKidsActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_emergency:
-                if(VideosActivity.EMERGENCY) {
+                if(selectedItem.isEmergency) {
                     goToPractice();
                 } else {
                     goToResults();
@@ -46,7 +51,7 @@ public class PracticePlayVideoActivity extends SimKidsActivity implements View.O
                 break;
 
             case R.id.btn_not_emergency:
-                if (!VideosActivity.EMERGENCY) {
+                if (!selectedItem.isEmergency) {
                     MainMenuActivity.CURRENT_TRY_SCORE = 8; // success!
                     LoginActivity.EDITOR.putInt(LoginActivity.CURRENT_TRY_SCORE, MainMenuActivity.CURRENT_TRY_SCORE);
                     LoginActivity.EDITOR.commit();

@@ -17,8 +17,10 @@ public class PlayVideoActivity extends SimKidsActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
 
+        String VIDEO_NAME = getIntent().getStringExtra("videoName");
+
         int videoResource = getResources().
-                getIdentifier(VideosActivity.VIDEO_NAME, "raw", getPackageName());
+                getIdentifier(VIDEO_NAME, "raw", getPackageName());
         String uri = "android.resource://" + getPackageName() + "/" + videoResource;
 
         VideoView videoView = (VideoView) findViewById(R.id.VideoView);

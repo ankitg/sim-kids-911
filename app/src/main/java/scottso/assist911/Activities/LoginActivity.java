@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import scottso.assist911.AccountItem;
@@ -15,7 +14,7 @@ import scottso.assist911.R;
 import scottso.assist911.SimKidsActivity;
 
 public class LoginActivity extends SimKidsActivity {
-    private EditText usernameET;
+//    private EditText usernameET;
 
     public static final String USERNAME = "USERNAME";
     public static final String TIMES_COMPLETED = "TIMES_COMPLETED";
@@ -42,15 +41,15 @@ public class LoginActivity extends SimKidsActivity {
         if (!PREF.getBoolean("IS_LOGGED_IN",false)) {
             setContentView(R.layout.activity_login);
 
-            usernameET = (EditText) findViewById(R.id.username);
-            final Button loginButton = (Button) findViewById(R.id.button_login);
+//            usernameET = (EditText) findViewById(R.id.username);
+            final Button loginButton = (Button) findViewById(R.id.button_login_student);
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     login();
                 }
             });
-            final Button newUserButton = (Button) findViewById(R.id.button_new_user);
+            final Button newUserButton = (Button) findViewById(R.id.button_login_parent);
             newUserButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -71,7 +70,7 @@ public class LoginActivity extends SimKidsActivity {
     }
 
     private void login() {
-        String username = usernameET.getText().toString();
+        String username = "NitMan"; //usernameET.getText().toString();
         if (username.equals("")) {
             Toast.makeText(this, "Please enter an existing username.",Toast.LENGTH_LONG).show();
             IS_LOGGED_IN = false;

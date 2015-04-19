@@ -33,4 +33,5 @@
          Right now answer/decline/reject icons have 38dp width/height.
          So, (94 - 38)/2 ==> 28dp -->
     <dimen name="incoming_call_widget_asset_margin">28dp</dimen>
+    <dimen name="listItemPadding">28dp</dimen>
 </resources>

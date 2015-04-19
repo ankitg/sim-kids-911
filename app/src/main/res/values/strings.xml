@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">911SimKids</string>
+    <string name="title_modeling">MODELING</string>
 
     <string-array name="videos_array">
         <item>Instructional Video</item>
