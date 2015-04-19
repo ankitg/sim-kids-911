@@ -15,5 +15,9 @@
         <item>Children Biking</item>
         <item>Family Playing Soccer</item>
     </string-array>
+    <string name="title_activity_parent_login">Parent Login</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

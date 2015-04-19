@@ -14,7 +14,6 @@ import scottso.assist911.R;
 import scottso.assist911.SimKidsActivity;
 
 public class LoginActivity extends SimKidsActivity {
-//    private EditText usernameET;
 
     public static final String USERNAME = "USERNAME";
     public static final String TIMES_COMPLETED = "TIMES_COMPLETED";
@@ -41,7 +40,6 @@ public class LoginActivity extends SimKidsActivity {
         if (!PREF.getBoolean("IS_LOGGED_IN",false)) {
             setContentView(R.layout.activity_login);
 
-//            usernameET = (EditText) findViewById(R.id.username);
             final Button loginButton = (Button) findViewById(R.id.button_login_student);
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,15 +62,15 @@ public class LoginActivity extends SimKidsActivity {
     }
 
     private void createUser() {
-        Intent intent = new Intent(this, SignUpActivity.class);
+        Intent intent = new Intent(this, ParentLoginActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void login() {
-        String username = "NitMan"; //usernameET.getText().toString();
+        String username = PREF.getString(USERNAME, "");
         if (username.equals("")) {
-            Toast.makeText(this, "Please enter an existing username.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please add a student account.",Toast.LENGTH_LONG).show();
             IS_LOGGED_IN = false;
         } else {
             AccountItem account = FileManager.findAndReadAccount(username, this);
